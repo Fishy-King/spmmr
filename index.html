@@ -26,7 +26,7 @@
 
       fetch("https://script.google.com/macros/s/AKfycbxyX_dHGy2ZoPm8eNMmSNOsG_Hn1nIwGbq2kgyHQ4uo_kI3Nk1wdM7DGRFu_LQezg/exec", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
           image: base64Image,
           filename: "image.png",
