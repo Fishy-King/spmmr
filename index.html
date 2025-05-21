@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Sender</title>
+</head>
+<body>
+  <input type="file" id="imgInput" accept="image/*" />
+  <script>
+    let base64Image = "";
+
+    document.getElementById('imgInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onloadend = function() {
+        base64Image = reader.result.split(',')[1]; // Strip the data URL header
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    });
+
+    setInterval(() => {
+      if (!base64Image) return;
+
+      fetch("https://script.google.com/macros/s/AKfycbxyX_dHGy2ZoPm8eNMmSNOsG_Hn1nIwGbq2kgyHQ4uo_kI3Nk1wdM7DGRFu_LQezg/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          image: base64Image,
+          filename: "image.png",
+          contentType: "image/png"
+        })
+      }).then(res => res.text()).then(console.log).catch(console.error);
+    }, 5000);
+  </script>
+</body>
+</html>
